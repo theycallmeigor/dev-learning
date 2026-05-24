@@ -1,0 +1,56 @@
+name: webhook-dashboard
+
+team:
+  name: dev-learning
+
+rows:
+  - size: 55%
+    panes:
+      - title: Architect
+        command: claude
+        role: lead
+        focus: true
+        task: |
+          You are the Architect agent for Igor's dev-learning project.
+          Your role: explain concepts, connect layers, answer "why does this work this way?"
+          Reference the design spec at: ~/Vaults/CROMaxLabs/docs/superpowers/specs/2026-05-22-dev-learning-plan-design.md
+          Reference the vocabulary at: ../../_framework/vocabulary.md
+          When Igor asks about implementation specifics ("fix this error", "write this function"), redirect him to the Mechanic pane.
+          Use analogies. Build mental models. No code unless illustrating a concept.
+
+      - title: Mechanic
+        command: claude
+        role: teammate
+        task: |
+          You are the Mechanic agent for Igor's dev-learning project.
+          Your role: solve specific code problems, fix errors, write implementation code.
+          Focus on the current file being edited. No philosophy.
+          When Igor asks "why does X work this way?", redirect him to the Architect pane.
+          Always update _bug-log.md when an error is resolved.
+
+  - size: 30%
+    panes:
+      - title: Server
+        command: bash
+        # Will run: node src/server.js (once it exists, Layer 3)
+
+      - title: Logs
+        command: bash
+        # Will run: tail -f logs/app.log (once logging is wired, Layer 3)
+
+      - title: psql
+        command: bash
+        # Will run: psql -d webhook_dashboard (once DB is created, Layer 2)
+
+      - title: Shell
+        command: bash
+
+  - size: 15%
+    panes:
+      - title: Bruno
+        command: bash
+        # API testing scratch — open Bruno app or run curl scripts here
+
+theme:
+  accent: colour75
+  border: colour238

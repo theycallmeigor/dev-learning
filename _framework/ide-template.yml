@@ -1,0 +1,51 @@
+# Template ide.yml for dev-learning projects.
+# Copy to projects/<name>/ide.yml and adapt the `name`, `task` strings, and pane commands.
+
+name: PROJECT_NAME
+
+team:
+  name: dev-learning
+
+rows:
+  - size: 55%
+    panes:
+      - title: Architect
+        command: claude
+        role: lead
+        focus: true
+        task: |
+          You are the Architect agent.
+          Your role: explain concepts, connect layers, answer "why does this work this way?"
+          Reference the design spec at: ~/Vaults/CROMaxLabs/docs/superpowers/specs/2026-05-22-dev-learning-plan-design.md
+          Reference the vocabulary at: ../../_framework/vocabulary.md
+          When asked about implementation specifics, redirect to the Mechanic pane.
+
+      - title: Mechanic
+        command: claude
+        role: teammate
+        task: |
+          You are the Mechanic agent.
+          Your role: solve specific code problems, fix errors, write implementation code.
+          Focus on the current file. No philosophy.
+          When asked "why does X work this way?", redirect to the Architect pane.
+          Always update _bug-log.md when an error is resolved.
+
+  - size: 30%
+    panes:
+      - title: Server
+        command: bash
+      - title: Logs
+        command: bash
+      - title: psql
+        command: bash
+      - title: Shell
+        command: bash
+
+  - size: 15%
+    panes:
+      - title: Bruno
+        command: bash
+
+theme:
+  accent: colour75
+  border: colour238
