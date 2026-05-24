@@ -1,0 +1,45 @@
+# Profile: balanced — Architect=Claude Sonnet, Mechanic=Kimi K2 via Aider. Cost: ~$1-2/day.
+# Requires: claude CLI, OPENROUTER_API_KEY env var.
+
+name: webhook-dashboard
+
+team:
+  name: dev-learning
+
+rows:
+  - size: 55%
+    panes:
+      - title: Architect (Claude Sonnet)
+        command: claude
+        role: lead
+        focus: true
+        task: |
+          ROLE: Architect (concepts/why). Load system prompt from ../../_framework/agents/architect.md
+          On startup paste:
+          "Use the system prompt at ../../_framework/agents/architect.md for this session."
+
+      - title: Mechanic (Kimi K2)
+        command: bash -c "aider --model openrouter/moonshotai/kimi-k2 --read ../../_framework/agents/mechanic.md --no-auto-commits"
+        role: teammate
+        task: |
+          ROLE: Mechanic (code/fixes). System prompt auto-loaded via --read flag.
+
+  - size: 30%
+    panes:
+      - title: Server
+        command: bash
+      - title: Logs
+        command: bash
+      - title: psql
+        command: bash
+      - title: Shell
+        command: bash
+
+  - size: 15%
+    panes:
+      - title: Bruno
+        command: bash
+
+theme:
+  accent: colour75
+  border: colour238

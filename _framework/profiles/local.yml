@@ -1,0 +1,45 @@
+# Profile: local — all inference on Mac Studio. Cost: $0/day.
+# Requires: LM Studio running with an MLX reasoning model, Ollama with qwen2.5-coder pulled.
+
+name: webhook-dashboard
+
+team:
+  name: dev-learning
+
+rows:
+  - size: 55%
+    panes:
+      - title: Architect (LM Studio)
+        command: bash -c "echo 'Paste agents/architect.md as system prompt then start session'; bash"
+        role: lead
+        focus: true
+        task: |
+          ROLE: Architect (concepts/why). Load: ../../_framework/agents/architect.md
+          RUNTIME: LM Studio via Tailscale (Mac Studio MLX). Recommend connecting via Aider:
+          aider --model openai/<lm-studio-model> --openai-api-base http://<tailscale-ip>:1234/v1 --read ../../_framework/agents/architect.md
+
+      - title: Mechanic (Ollama)
+        command: bash -c "ollama run qwen2.5-coder"
+        role: teammate
+        task: |
+          ROLE: Mechanic (code/fixes). Paste agents/mechanic.md as first message after qwen loads.
+
+  - size: 30%
+    panes:
+      - title: Server
+        command: bash
+      - title: Logs
+        command: bash
+      - title: psql
+        command: bash
+      - title: Shell
+        command: bash
+
+  - size: 15%
+    panes:
+      - title: Bruno
+        command: bash
+
+theme:
+  accent: colour75
+  border: colour238

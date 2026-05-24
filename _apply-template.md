@@ -21,11 +21,13 @@ Use this when you want to apply the dev-learning framework to a new topic (e.g.,
    ```
    Then open each and clear out webhook-dashboard-specific content.
 
-3. **Copy and adapt the tmux config**
+3. **Symlink the tmux config to a profile** (don't copy — keeps profiles centrally managed)
    ```bash
-   cp _framework/ide-template.yml projects/$PROJECT/ide.yml
+   cd projects/$PROJECT
+   ln -s ../../_framework/profiles/balanced.yml ide.yml
+   cd ../..
    ```
-   Edit `ide.yml`: set `name:` to your project name, customize pane commands for the stack (e.g., swap `psql` for `redis-cli` if not using Postgres).
+   Profile options: `local.yml` (free, local LLMs), `cheap.yml` (~$0.20/day, Kimi K2), `balanced.yml` (~$1-2/day, recommended default), `premium.yml` (~$5-10/day, interview prep). See `_framework/runtime-profiles.md` for details and switching.
 
 4. **Copy the .gitignore**
    ```bash

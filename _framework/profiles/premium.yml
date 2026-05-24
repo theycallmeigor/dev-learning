@@ -1,0 +1,47 @@
+# Profile: premium — Architect=Claude Opus, Mechanic=Claude Sonnet. Cost: ~$5-10/day.
+# Use sparingly: real interview prep, deep concept sessions, hard debugging.
+
+name: webhook-dashboard
+
+team:
+  name: dev-learning
+
+rows:
+  - size: 55%
+    panes:
+      - title: Architect (Claude Opus)
+        command: bash -c "claude --model claude-opus-4-7"
+        role: lead
+        focus: true
+        task: |
+          ROLE: Architect (concepts/why). Load system prompt from ../../_framework/agents/architect.md
+          On startup paste:
+          "Use the system prompt at ../../_framework/agents/architect.md for this session."
+
+      - title: Mechanic (Claude Sonnet)
+        command: bash -c "claude --model claude-sonnet-4-6"
+        role: teammate
+        task: |
+          ROLE: Mechanic (code/fixes). Load system prompt from ../../_framework/agents/mechanic.md
+          On startup paste:
+          "Use the system prompt at ../../_framework/agents/mechanic.md for this session."
+
+  - size: 30%
+    panes:
+      - title: Server
+        command: bash
+      - title: Logs
+        command: bash
+      - title: psql
+        command: bash
+      - title: Shell
+        command: bash
+
+  - size: 15%
+    panes:
+      - title: Bruno
+        command: bash
+
+theme:
+  accent: colour75
+  border: colour238

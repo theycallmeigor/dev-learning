@@ -76,6 +76,14 @@ Add terms here as you encounter them. One line per term. This grows — don't tr
 **Integration test** — testing how two or more parts work together
 **Scaffolding** — auto-generating boilerplate to start a project
 
+## CLI / Unix Conventions
+
+**Dot-folder** — hidden folder in your home directory where a CLI tool stores its per-user config (`.claude/`, `.gemini/`, `.antigravitycli/`). 40+ year Unix convention. Spotting it tells you where any tool stores settings without reading docs.
+**Binary** — the actual executable file you run from the terminal (`claude`, `node`, `git`). Lives somewhere in your `PATH`.
+**PATH** — environment variable listing folders the shell searches when you type a command. `which <cmd>` shows you which file gets run.
+**Symlink** — a "shortcut" file that points to another file. `ln -s target link` creates one. Used here to point `ide.yml` at a profile in `_framework/profiles/`.
+**Environment variable** — a key-value pair living in your shell session — apps read these for config. Examples: `OPENROUTER_API_KEY`, `PATH`. Set via `export KEY=value`.
+
 ## AI / LLM
 
 **LLM** — Large Language Model — the AI model itself (Claude, GPT-4, etc.)
