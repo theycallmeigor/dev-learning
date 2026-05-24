@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Secrets
+.env
+.env.local
+*.secret
+
+# Scraped output (could contain client-sensitive content)
+data/*.csv
+data/*.json
+data/*.parquet
+
+# Logs
+logs/*.log
+
+# OS
+.DS_Store
+
+# keep folder structure
+!data/.gitkeep
+!logs/.gitkeep
