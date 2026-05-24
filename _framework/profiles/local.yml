@@ -1,5 +1,10 @@
 # Profile: local — all inference on Mac Studio. Cost: $0/day.
-# Requires: LM Studio running with an MLX reasoning model, Ollama with qwen2.5-coder pulled.
+# Requires: LM Studio running on Mac Studio (igors-mac-studio:1234) with these models loaded:
+#   - qwen3-32b-dwq (Architect — deep reasoning)
+#   - qwen3-coder-30b-a3b-instruct-mlx (Mechanic — code generation)
+#   - text-embedding-qwen3-embedding-4b (vault retrieval, 2560-dim, matches store)
+#   - qwen/qwen3-vl-30b (optional, adlab Layer 7 VLM for ad screenshot analysis)
+# Tailscale gives LAN access to igors-mac-studio:1234 from any device.
 
 name: webhook-dashboard
 
@@ -9,20 +14,22 @@ team:
 rows:
   - size: 55%
     panes:
-      - title: Architect (LM Studio)
-        command: bash -c "echo 'Paste agents/architect.md as system prompt then start session'; bash"
+      - title: Architect (qwen3-32b)
+        command: bash -c "aider --model openai/qwen3-32b-dwq --openai-api-base http://igors-mac-studio:1234/v1 --openai-api-key dummy --read ../../_framework/agents/architect.md --no-auto-commits"
         role: lead
         focus: true
         task: |
-          ROLE: Architect (concepts/why). Load: ../../_framework/agents/architect.md
-          RUNTIME: LM Studio via Tailscale (Mac Studio MLX). Recommend connecting via Aider:
-          aider --model openai/<lm-studio-model> --openai-api-base http://<tailscale-ip>:1234/v1 --read ../../_framework/agents/architect.md
+          ROLE: Architect (concepts/why). Runtime: LM Studio qwen3-32b-dwq via Tailscale.
+          System prompt auto-loaded via --read flag.
+          Fallback if qwen3-32b unloaded: qwen/qwen3-30b-a3b (MoE, faster).
 
-      - title: Mechanic (Ollama)
-        command: bash -c "ollama run qwen2.5-coder"
+      - title: Mechanic (qwen3-coder)
+        command: bash -c "aider --model openai/qwen3-coder-30b-a3b-instruct-mlx --openai-api-base http://igors-mac-studio:1234/v1 --openai-api-key dummy --read ../../_framework/agents/mechanic.md --no-auto-commits"
         role: teammate
         task: |
-          ROLE: Mechanic (code/fixes). Paste agents/mechanic.md as first message after qwen loads.
+          ROLE: Mechanic (code/fixes). Runtime: LM Studio qwen3-coder-30b-a3b-instruct-mlx via Tailscale.
+          System prompt auto-loaded via --read flag.
+          Fallback for faster autocomplete-style: qwen2.5-coder-3b-instruct-mlx.
 
   - size: 30%
     panes:
